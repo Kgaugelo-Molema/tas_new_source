@@ -40,7 +40,7 @@ $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STA
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','ProjSpen','Project Spend', 236300,59763700,60000000)";
+                   '".$_SERVER['HTTP_USER_AGENT']."','ProjSpen','Project Spend', 23,59,60000000)";
 
 echo "$sqltext<br>";
 				   
