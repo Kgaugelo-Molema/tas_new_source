@@ -1,7 +1,7 @@
 <?php
 //require_once('/dbinitialisation.php');
-//$servername = "gaea.sadomain.com";
-$servername = "localhost";
+$servername = "gaea.sadomain.com";
+//$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -28,7 +28,7 @@ $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STA
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','NoProj','No. of Projects',1,139,140)";
+                   '".$_SERVER['HTTP_USER_AGENT']."','NoProj','Number of Projects',40,100,140)";
 				   
 echo "$sqltext<br>";
 				   
@@ -40,7 +40,7 @@ $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STA
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','ProjSpen','Project Spend', 23,59,60000000)";
+                   '".$_SERVER['HTTP_USER_AGENT']."','ProjSpen','Project Spend (R)', 23000000,39000000,60000000)";
 
 echo "$sqltext<br>";
 				   
@@ -52,7 +52,7 @@ $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STA
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','ProjProg','Project Progress',2,97,100)";
+                   '".$_SERVER['HTTP_USER_AGENT']."','ProjProg','Project Progress(%)',33,67,100)";
 				   
 echo "$sqltext<br>";
 				   
@@ -64,7 +64,7 @@ $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STA
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','NoJobs','No. of Jobs',51,3869,3920)";
+                   '".$_SERVER['HTTP_USER_AGENT']."','NoJobs','Number of Jobs',1454,2869,3920)";
 				   
 echo "$sqltext<br>";
 				   

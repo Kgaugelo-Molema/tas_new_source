@@ -1,3 +1,10 @@
+.summarydata 
+{
+    margin: 0 auto;
+    border-spacing: 5px 2px;
+}
+.summarydata td{text-align: right;}
+h5 {text-align: center;}
 div#container
 {
    position: relative;

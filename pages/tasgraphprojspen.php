@@ -1,9 +1,10 @@
 <?php
-$servername = "localhost";
+$servername = "gaea.sadomain.com";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
 $mysql_table = "STATS";
+$StatType = "ProjSpen";
 
 $conn = new mysqli($servername, $username, $password, '');
 // Check connection
@@ -14,18 +15,43 @@ if (!$conn->select_db($dbname)) {
 	die( "Error: Failed to select database '$dbname' ".$conn->error."<br>");
 }
 
-$sql = "SELECT 'ACTUAL' AS 'DESC', ACTUAL 'VALUE', DESCRIPTION 'STAT' FROM STATS WHERE STAT_TYPE = 'ProjSpen' ";
-$sql .= "UNION "; 
-$sql .= "SELECT 'BALANCE' AS 'DESC', BALANCE 'VALUE', DESCRIPTION 'STAT' FROM STATS WHERE STAT_TYPE = 'ProjSpen'";
+$sql = "SELECT DESCRIPTION, ACTUAL, BALANCE, TARGET FROM STATS WHERE STAT_TYPE = '".$StatType."'";
 
 ?>
 <html>
 	<head>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+                <link rel="stylesheet" href="../styles/style.css">
 	</head>
 	<body>
-		<h5 style="text-align: center;">No. of Projects</h5>
-		<canvas id="myChart" width="200px" height="100px"></canvas>
+
+<?php
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+	$rowsremaining = $result->num_rows;
+        $row = $result->fetch_assoc();
+        echo "<h5>".$row["DESCRIPTION"]."</h5>";
+        
+        $summtable = '<table class="summarydata">
+                        <tbody>
+                            <tr>
+                              <td></td><th>ACTUAL</th><th>BALANCE</th><th>TARGET</th>
+                            </tr>';
+        $result = $conn->query($sql);
+        while($row = $result->fetch_assoc()) {
+            $summtable .= "<tr>
+                              <td>".$row["DESCRIPTION"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["BALANCE"]."</td><td>".$row["TARGET"]."</td>
+                            </tr>";
+        }
+        $summtable .= " </tbody>
+                      </table>";
+        echo $summtable;
+}
+?>
+            
+            <br><br>
+                <canvas id="myChart" width="200px" height="100px"></canvas>
 		<script>
 			var ctx = document.getElementById("myChart").getContext('2d');
 			var myChart = new Chart(ctx, {
@@ -34,6 +60,9 @@ $sql .= "SELECT 'BALANCE' AS 'DESC', BALANCE 'VALUE', DESCRIPTION 'STAT' FROM ST
 
 <?php
 $labels = "labels: [";
+$sql = "SELECT 'ACTUAL' AS 'DESC', ACTUAL 'VALUE', DESCRIPTION 'STAT' FROM STATS WHERE STAT_TYPE = '".$StatType."' ";
+$sql .= "UNION "; 
+$sql .= "SELECT 'BALANCE' AS 'DESC', BALANCE 'VALUE', DESCRIPTION 'STAT' FROM STATS WHERE STAT_TYPE = '".$StatType."'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
