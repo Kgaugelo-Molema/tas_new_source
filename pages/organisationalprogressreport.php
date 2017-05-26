@@ -1,6 +1,5 @@
 <?php
-//$servername = "gaea.sadomain.com";
-$servername = "localhost";
+$servername = "gaea.sadomain.com";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -16,13 +15,13 @@ if (!$conn->select_db($dbname)) {
 	die( "Error: Failed to select database '$dbname' ".$conn->error."<br>");
 }
 
-$sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)` FROM ".$mysql_table;
+$sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
 
 ?>
 <html>
 	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-                <link rel="stylesheet" href="../styles/style.css">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../styles/reportstyle.css">
 	</head>
 	<body>
 
@@ -34,15 +33,16 @@ if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         echo "<h5>Organisational Progress Report - CEO</h5>";
         
-        $summtable = '<table class="summarydata">
+        $summtable = '<table>
+                        <caption>Annual</caption>
                         <tbody>
                             <tr>
-                              <th>Programme/ Dept</th><th>YEAR</th><th>KPI</th><th>TARGET</th><th>ACTUAL</th><th>VARIANCE (%)</th>
+                              <th>Programme/ Dept</th><th>YEAR</th><th>KPI</th><th>OBJECTIVE MET?</th><th>TARGET</th><th>ACTUAL</th><th>VARIANCE (%)</th>
                             </tr>';
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $summtable .= "<tr>
-                              <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"]."</td><td>".$row["KPI"]."</td><td>".$row["TARGET"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["VARIANCE (%)"]."</td>
+                              <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"]."</td><td>".$row["KPI"]."</td><td>".$row["OBJECTIVE MET?"]."</td><td>".$row["TARGET"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["VARIANCE (%)"]."</td>
                             </tr>";
         }
         $summtable .= " </tbody>
@@ -50,6 +50,7 @@ if ($result->num_rows > 0) {
         echo $summtable;
 }
 ?>
-            
+            <br><br>
+            <h5><a href="../pages/organisationalprogressreport.php" target="_blank" title="Open Report">Open report in new window</a></h5>
     </body>
 </html>

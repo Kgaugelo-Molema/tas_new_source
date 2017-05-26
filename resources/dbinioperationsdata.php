@@ -1,11 +1,10 @@
 <?php
 //require_once('/dbinitialisation.php');
-//$servername = "gaea.sadomain.com";
-$servername = "localhost";
+$servername = "gaea.sadomain.com";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
-$mysql_table = "operations";
+$mysql_table = "OPERATIONS";
 
 $conn = new mysqli($servername, $username, $password, '');
 // Check connection
@@ -45,6 +44,18 @@ $sqltext = "INSERT INTO $mysql_table (".$dataCols.")
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
                    '".$_SERVER['HTTP_USER_AGENT']."','NoJobs', 2017, 1, 'GP', 51)";
+				   
+echo "$sqltext<br>";
+				   
+if (!$conn->query($sqltext)) {
+	die( "Error: Failed to insert data into table '$mysql_table' ".$conn->error."<br>");
+}
+
+$sqltext = "INSERT INTO $mysql_table (".$dataCols.")
+                   VALUES ('".date("Y-m-d")."',
+                   '".date("G:i:s")."',
+                   '".$_SERVER['REMOTE_ADDR']."',
+                   '".$_SERVER['HTTP_USER_AGENT']."','ProjProg', 2017, 1, 'GP', 12)";
 				   
 echo "$sqltext<br>";
 				   

@@ -1,0 +1,35 @@
+* { 
+	margin: 0; 
+	padding: 0px 30px ; 
+}
+#page-wrap {
+	margin: 50px;
+}
+table td:nth-last-child(-n+4){text-align: right;}
+table th:nth-last-child(-n+4){text-align: right;}
+h5 {text-align: center;}
+p {
+	margin: 20px 0; 
+}
+
+	/* 
+	Generic Styling, for Desktops/Laptops 
+	*/
+	table { 
+		width: 100%; 
+		border-collapse: collapse; 
+	}
+	/* Zebra striping */
+	tr:nth-of-type(odd) { 
+		background: #eee; 
+	}
+	th { 
+		background: #333; 
+		color: white; 
+		font-weight: bold; 
+	}
+	td, th { 
+		padding: 6px; 
+		border: 1px solid #ccc; 
+		text-align: left; 
+	}

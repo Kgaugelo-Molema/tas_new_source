@@ -20,7 +20,7 @@ $sql = "SELECT DESCRIPTION, ACTUAL, BALANCE, TARGET FROM STATS WHERE STAT_TYPE =
 ?>
 <html>
 	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+		<script src="../js/Chart.min.js"></script>
                 <link rel="stylesheet" href="../styles/style.css">
 	</head>
 	<body>

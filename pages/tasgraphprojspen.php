@@ -3,7 +3,7 @@ $servername = "gaea.sadomain.com";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
-$mysql_table = "STATS";
+$mysql_table = "ORGANISATIONALPROGRESS";
 $StatType = "ProjSpen";
 
 $conn = new mysqli($servername, $username, $password, '');
@@ -15,12 +15,12 @@ if (!$conn->select_db($dbname)) {
 	die( "Error: Failed to select database '$dbname' ".$conn->error."<br>");
 }
 
-$sql = "SELECT DESCRIPTION, ACTUAL, BALANCE, TARGET FROM STATS WHERE STAT_TYPE = '".$StatType."'";
+$sql = "SELECT `KPI`, ACTUAL, BALANCE, TARGET FROM " .$mysql_table. " STATS WHERE STAT_TYPE = '".$StatType."'";
 
 ?>
 <html>
 	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+		<script src="../js/Chart.min.js"></script>
                 <link rel="stylesheet" href="../styles/style.css">
 	</head>
 	<body>
@@ -31,7 +31,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 	$rowsremaining = $result->num_rows;
         $row = $result->fetch_assoc();
-        echo "<h5>".$row["DESCRIPTION"]."</h5>";
+        echo "<h5>".$row["KPI"]."</h5>";
         
         $summtable = '<table class="summarydata">
                         <tbody>
@@ -41,7 +41,7 @@ if ($result->num_rows > 0) {
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $summtable .= "<tr>
-                              <td>".$row["DESCRIPTION"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["BALANCE"]."</td><td>".$row["TARGET"]."</td>
+                              <td>".$row["KPI"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["BALANCE"]."</td><td>".$row["TARGET"]."</td>
                             </tr>";
         }
         $summtable .= " </tbody>
@@ -60,9 +60,9 @@ if ($result->num_rows > 0) {
 
 <?php
 $labels = "labels: [";
-$sql = "SELECT 'ACTUAL' AS 'DESC', ACTUAL 'VALUE', DESCRIPTION 'STAT' FROM STATS WHERE STAT_TYPE = '".$StatType."' ";
+$sql = "SELECT 'ACTUAL' AS 'DESC', ACTUAL 'VALUE', KPI 'STAT' FROM " .$mysql_table. " WHERE STAT_TYPE = '".$StatType."' ";
 $sql .= "UNION "; 
-$sql .= "SELECT 'BALANCE' AS 'DESC', BALANCE 'VALUE', DESCRIPTION 'STAT' FROM STATS WHERE STAT_TYPE = '".$StatType."'";
+$sql .= "SELECT 'BALANCE' AS 'DESC', BALANCE 'VALUE', KPI 'STAT' FROM " .$mysql_table. " WHERE STAT_TYPE = '".$StatType."'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
