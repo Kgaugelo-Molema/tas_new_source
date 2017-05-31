@@ -16,20 +16,16 @@ if (!$conn->select_db($dbname)) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     //Get the captured province budget ID
-    $sqlBudgetId = "SELECT *,BUDGET_ID FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' AND 
+    $sqlBudgetId = "SELECT BUDGET_ID FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' AND 
             DATESTAMP = (SELECT MAX(DATESTAMP) FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' ) AND 
             TIME = (SELECT MAX(TIME) FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' )";
     $result = $conn->query($sqlBudgetId);
     if (!$conn->query($sqlBudgetId)) {
-        echo "$sqlBudgetId<br>";
         die( "Error: Failed to get budget details from '$mysql_table' ".$conn->error."<br>");
     }
 
     $budget_id = 0;
-    echo $budget_id;
     if ($result->num_rows > 0) {
-	$rowsremaining = $result->num_rows;
-        echo $rowsremaining;
         $row = $result->fetch_assoc();        
         $budget_id = $row["BUDGET_ID"];        
     }
@@ -98,46 +94,20 @@ if (!$conn->query($sql)) {
     }
     echo '</select>';
     echo '<br><br>';
-
 ?>
-                <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
-                <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
-                <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
-                <input type="number" id="budget" name="budget" value="" placeholder="Budget"><br><br>
-<?php
-    $sql = "SELECT MAX(DATESTAMP), MAX(TIME), PROVINCE, BUDGET FROM BUDGETS 
-            GROUP BY PROVINCE, BUDGET";
-    $result = $conn->query($sql);
-    if (!$conn->query($sql)) {
-        die( "Error: Failed to return data from table BUDGETS ".$conn->error."<br>");
-    }
-
-    echo '<select name="budget_prov">';
-    echo '  <option value="none">--Select Budget--</option>';
-    if ($result->num_rows > 0) {
-	$rowsremaining = $result->num_rows;
-        $row = $result->fetch_assoc();
-        
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()) {
-            echo '<option value="'.$row["PROVINCE"].'"> '.$row["PROVINCE"]." - ".$row["BUDGET"].'</option>';
-        }
-    }
-    echo '</select>';
-    echo '<br><br>';
-    
-?>
-
-                <select name="quater">
-                    <option value="none">--Select Quarter--</option>
-                    <option value="1">Quarter 1</option>
-                    <option value="2">Quarter 2</option>
-                    <option value="3">Quarter 3</option>
-                    <option value="4">Quarter 4</option>
-                </select>
-                <br><br>
-                <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
-                <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
-            </form>
-        </body>
+            <select name="quater">
+                <option value="none">--Select Quarter--</option>
+                <option value="1">Quarter 1</option>
+                <option value="2">Quarter 2</option>
+                <option value="3">Quarter 3</option>
+                <option value="4">Quarter 4</option>
+            </select>
+            <br><br>
+            <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
+            <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
+            <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
+            <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
+            <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
+        </form>
+    </body>
 </html>

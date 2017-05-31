@@ -81,8 +81,6 @@ if (!$conn->query($sql)) {
     echo '<br><br>';
 
 ?>
-                <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
-                <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
                 <select name="quater">
                     <option value="none">--Select Quarter--</option>
                     <option value="1">Quarter 1</option>
@@ -91,6 +89,8 @@ if (!$conn->query($sql)) {
                     <option value="4">Quarter 4</option>
                 </select>
                 <br><br>
+                <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
+                <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
                 <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
                 <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
             </form>

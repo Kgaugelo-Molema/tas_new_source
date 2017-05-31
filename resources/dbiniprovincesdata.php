@@ -1,6 +1,6 @@
 <?php
 //require_once('/dbinitialisation.php');
-$servername = "gaea.sadomain.com";
+$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -91,7 +91,7 @@ $sqltext = "INSERT INTO $mysql_table (".$dataCols.")
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','KZN','Kwa-Zulu Natal')";
+                   '".$_SERVER['HTTP_USER_AGENT']."','KZ','Kwa-Zulu Natal')";
 				   
 echo "$sqltext<br>";
 				   

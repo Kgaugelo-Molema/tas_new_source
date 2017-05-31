@@ -105,7 +105,8 @@ if (!$conn->select_db($dbname)) {
         }
         if ($filtervalues != "") {
             $sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
-            $sql .= " WHERE " . $filtervalues; 
+            $sql .= " WHERE " . $filtervalues;
+            echo $sql;
         }
     }
     $result = $conn->query($sql);

@@ -15,12 +15,12 @@ if (!$conn->select_db($dbname)) {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `YEAR`, `QUARTER`, `PROVINCE`, `BUDGET`)
+    $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `YEAR`, `QUARTER`, `PROVINCE`, `BUDGET`, QTY)
                        VALUES ('".date("Y-m-d")."',
                        '".date("G:i:s")."',
                        '".$_SERVER['REMOTE_ADDR']."',
                        '".$_SERVER['HTTP_USER_AGENT']."'";
-    $inputvalues = $_POST["year"].",'".$_POST["quater"]."','".$_POST["prov_cd"]."',".$_POST["budget"];
+    $inputvalues = $_POST["year"].",'".$_POST["quater"]."','".$_POST["prov_cd"]."',".$_POST["budget"].",".$_POST["qty"];
     $sqltext = $sqltext.",".$inputvalues.")";
 
     if (!$conn->query($sqltext)) {
@@ -61,10 +61,6 @@ if (!$conn->query($sql)) {
     echo '<br><br>';
 
 ?>
-                <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
-                <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
-                <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
-                <input type="number" id="budget" name="budget" value="" placeholder="Budget"><br><br>
                 <select name="quater">
                     <option value="none">--Select Quarter--</option>
                     <option value="1">Quarter 1</option>
@@ -73,6 +69,10 @@ if (!$conn->query($sql)) {
                     <option value="4">Quarter 4</option>
                 </select>
                 <br><br>
+                <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
+                <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
+                <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
+                <input type="number" id="budget" name="budget" value="" placeholder="Budget"><br><br>
                 <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
                 <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
             </form>
