@@ -25,7 +25,7 @@ if (!$conn->select_db($dbname)) {
         <form name="OrgReportFilter" method="post" action="<?php echo basename(__FILE__); ?>" enctype="multipart/form-data" id="Form1">
         
 <?php
-        echo "<h3>Organisational Progress Report - CEO</h3>";
+        echo "<h3>Organisational Progress Report</h3>";
         echo "<br><br>";
 
         $filtersql = "SELECT DISTINCT YEAR FROM ORGANISATIONALPROGRESS";
