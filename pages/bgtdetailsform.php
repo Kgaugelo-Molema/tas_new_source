@@ -3,7 +3,7 @@ $servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
-$mysql_table = "PROGRAMS";
+$mysql_table = "BUDGETS";
 
 $conn = new mysqli($servername, $username, $password, '');
 // Check connection
@@ -15,31 +15,12 @@ if (!$conn->select_db($dbname)) {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    //Get the captured province budget ID
-    $sqlBudgetId = "SELECT *,BUDGET_ID FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' AND 
-            DATESTAMP = (SELECT MAX(DATESTAMP) FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' ) AND 
-            TIME = (SELECT MAX(TIME) FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' )";
-    $result = $conn->query($sqlBudgetId);
-    if (!$conn->query($sqlBudgetId)) {
-        echo "$sqlBudgetId<br>";
-        die( "Error: Failed to get budget details from '$mysql_table' ".$conn->error."<br>");
-    }
-
-    $budget_id = 0;
-    echo $budget_id;
-    if ($result->num_rows > 0) {
-	$rowsremaining = $result->num_rows;
-        echo $rowsremaining;
-        $row = $result->fetch_assoc();        
-        $budget_id = $row["BUDGET_ID"];        
-    }
-    
-    $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STAT_TYPE`, `YEAR`, `QUARTER`, `PROVINCE`, `QTY`, `QTY_PCT`, `BUDGET_ID`)
+    $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `YEAR`, `QUARTER`, `PROVINCE`, `BUDGET`)
                        VALUES ('".date("Y-m-d")."',
                        '".date("G:i:s")."',
                        '".$_SERVER['REMOTE_ADDR']."',
                        '".$_SERVER['HTTP_USER_AGENT']."'";
-    $inputvalues = "'".$_POST["kpi_cd"]."',".$_POST["year"].",'".$_POST["quater"]."','".$_POST["prov_cd"]."',".$_POST["qty"].",".$_POST["pct"].",".$budget_id;
+    $inputvalues = $_POST["year"].",'".$_POST["quater"]."','".$_POST["prov_cd"]."',".$_POST["budget"];
     $sqltext = $sqltext.",".$inputvalues.")";
 
     if (!$conn->query($sqltext)) {
@@ -56,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <script src="../js/scripts.js"></script>
 	</head>
 	<body>
-            <h5>Program Details</h5>
-            <form name="PrgDetailsForm" method="post" action="<?php echo basename(__FILE__); ?>" enctype="multipart/form-data" id="Form1">
+            <h5>Budget Details</h5>
+            <form name="BgtDetailsForm" method="post" action="<?php echo basename(__FILE__); ?>" enctype="multipart/form-data" id="Form1">
 <?php
 $sql = "SELECT PROV_CODE, DESCRIPTION FROM PROVINCES";
 $result = $conn->query($sql);
@@ -79,55 +60,11 @@ if (!$conn->query($sql)) {
     echo '</select>';
     echo '<br><br>';
 
-$sql = "SELECT STAT_TYPE, DESCRIPTION FROM STAT_TYPES";
-$result = $conn->query($sql);
-if (!$conn->query($sql)) {
-    die( "Error: Failed to return data from table STAT_TYPES ".$conn->error."<br>");
-}
-
-    echo '<select name="kpi_cd">';
-    echo '  <option value="none">--Select KPI--</option>';
-    if ($result->num_rows > 0) {
-	$rowsremaining = $result->num_rows;
-        $row = $result->fetch_assoc();
-        
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()) {
-            echo '<option value="'.$row["STAT_TYPE"].'"> '.$row["DESCRIPTION"].'</option>';
-        }
-    }
-    echo '</select>';
-    echo '<br><br>';
-
 ?>
                 <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
                 <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
                 <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
                 <input type="number" id="budget" name="budget" value="" placeholder="Budget"><br><br>
-<?php
-    $sql = "SELECT MAX(DATESTAMP), MAX(TIME), PROVINCE, BUDGET FROM BUDGETS 
-            GROUP BY PROVINCE, BUDGET";
-    $result = $conn->query($sql);
-    if (!$conn->query($sql)) {
-        die( "Error: Failed to return data from table BUDGETS ".$conn->error."<br>");
-    }
-
-    echo '<select name="budget_prov">';
-    echo '  <option value="none">--Select Budget--</option>';
-    if ($result->num_rows > 0) {
-	$rowsremaining = $result->num_rows;
-        $row = $result->fetch_assoc();
-        
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()) {
-            echo '<option value="'.$row["PROVINCE"].'"> '.$row["PROVINCE"]." - ".$row["BUDGET"].'</option>';
-        }
-    }
-    echo '</select>';
-    echo '<br><br>';
-    
-?>
-
                 <select name="quater">
                     <option value="none">--Select Quarter--</option>
                     <option value="1">Quarter 1</option>
