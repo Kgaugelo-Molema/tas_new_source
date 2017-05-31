@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <script src="../js/scripts.js"></script>
 	</head>
 	<body>
-            <h5>Project Details</h5>
+            <h3>Project Details</h3>
             <form name="PrjDetailsForm" method="post" action="<?php echo basename(__FILE__); ?>" enctype="multipart/form-data" id="Form1">
 <?php
 $sql = "SELECT PROV_CODE, DESCRIPTION FROM PROVINCES";

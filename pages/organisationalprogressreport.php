@@ -25,7 +25,7 @@ if (!$conn->select_db($dbname)) {
         <form name="OrgReportFilter" method="post" action="<?php echo basename(__FILE__); ?>" enctype="multipart/form-data" id="Form1">
         
 <?php
-        echo "<h5>Organisational Progress Report - CEO</h5>";
+        echo "<h3>Organisational Progress Report - CEO</h3>";
         echo "<br><br>";
 
         $filtersql = "SELECT DISTINCT YEAR FROM ORGANISATIONALPROGRESS";
@@ -118,7 +118,7 @@ if (!$conn->select_db($dbname)) {
     if ($result->num_rows > 0) {
 	$rowsremaining = $result->num_rows;
         $row = $result->fetch_assoc();
-        $filtercaption = "[All provinces] [All quarters]";
+        $filtercaption = "<h4>[All provinces] [All quarters]</h4>";
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $filtercaption = "";

@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <script src="../js/scripts.js"></script>
 	</head>
 	<body>
-            <h5>Budget Details</h5>
+            <h3>Budget Details</h3>
             <form name="BgtDetailsForm" method="post" action="<?php echo basename(__FILE__); ?>" enctype="multipart/form-data" id="Form1">
 <?php
 $sql = "SELECT PROV_CODE, DESCRIPTION FROM PROVINCES";
@@ -71,7 +71,6 @@ if (!$conn->query($sql)) {
                 <br><br>
                 <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
                 <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
-                <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
                 <input type="number" id="budget" name="budget" value="" placeholder="Budget"><br><br>
                 <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
                 <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
