@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost";
+$servername = "gaea.sadomain.com";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -15,7 +15,7 @@ if (!$conn->select_db($dbname)) {
 	die( "Error: Failed to select database '$dbname' ".$conn->error."<br>");
 }
 
-$sql = "SELECT `KPI`, ACTUAL, BALANCE, TARGET FROM " .$mysql_table. " STATS WHERE STAT_TYPE = '".$StatType."'";
+$sql = "SELECT `KPI`, ACTUAL, BALANCE, TARGET FROM " .$mysql_table. " WHERE STAT_TYPE = '".$StatType."'";
 
 ?>
 <html>
