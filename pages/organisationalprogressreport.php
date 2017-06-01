@@ -1,5 +1,6 @@
 <?php
-$servername = "gaea.sadomain.com";
+//$servername = "gaea.sadomain.com";
+$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -106,7 +107,6 @@ if (!$conn->select_db($dbname)) {
         if ($filtervalues != "") {
             $sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
             $sql .= " WHERE " . $filtervalues;
-            echo $sql;
         }
     }
     $result = $conn->query($sql);
@@ -132,7 +132,7 @@ if (!$conn->select_db($dbname)) {
                 $filtercaption .= "[Quarter: ".$_POST["quarter"]."] ";
             }
         }
-        $summtable = '<table>
+        $datatable = '<table>
                         <caption>'.$filtercaption.'</caption>
                         <tbody>
                             <tr>
@@ -140,13 +140,13 @@ if (!$conn->select_db($dbname)) {
                             </tr>';
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
-            $summtable .= "<tr>
+            $datatable .= "<tr>
                               <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"]."</td><td>".$row["KPI"]."</td><td>".$row["OBJECTIVE MET?"]."</td><td>".$row["TARGET"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["VARIANCE (%)"]."</td>
                             </tr>";
         }
-        $summtable .= " </tbody>
+        $datatable .= " </tbody>
                       </table>";
-        echo $summtable;
+        echo $datatable;
 }
 ?>
             <br><br>

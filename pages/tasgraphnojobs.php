@@ -1,5 +1,5 @@
 <?php
-$servername = "gaea.sadomain.com";
+$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -33,20 +33,20 @@ if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         echo "<h5>".$row["KPI"]."</h5>";
         
-        $summtable = '<table class="summarydata">
+        $datatable = '<table class="summarydata">
                         <tbody>
                             <tr>
                               <td></td><th>ACTUAL</th><th>BALANCE</th><th>TARGET</th>
                             </tr>';
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
-            $summtable .= "<tr>
+            $datatable .= "<tr>
                               <td>".$row["KPI"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["BALANCE"]."</td><td>".$row["TARGET"]."</td>
                             </tr>";
         }
-        $summtable .= " </tbody>
+        $datatable .= " </tbody>
                       </table>";
-        echo $summtable;
+        echo $datatable;
 }
 ?>
             

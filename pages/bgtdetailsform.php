@@ -1,5 +1,5 @@
 <?php
-$servername = "gaea.sadomain.com";
+$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -58,7 +58,7 @@ if (!$conn->query($sql)) {
         }
     }
     echo '</select>';
-    echo '<br><br>';
+    echo '&nbsp;';
 
 ?>
                 <select name="quater">
@@ -69,11 +69,31 @@ if (!$conn->query($sql)) {
                     <option value="4">Quarter 4</option>
                 </select>
                 <br><br>
-                <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
+                <input type="number" id="year" name="year" value="" placeholder="Year">&nbsp;
                 <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
                 <input type="number" id="budget" name="budget" value="" placeholder="Budget"><br><br>
-                <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
+                <input type="reset" id="ResetBtn" name="" value="Reset">&nbsp;
                 <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
             </form>
+<?php
+    $sql = "SELECT YEAR, QUARTER, PROVINCE, QTY, QTY_PCT, FORMAT(BUDGET,2) 'BUDGET' FROM BUDGETS ";
+    $result = $conn->query($sql);
+    $datatable = "<h5>No budget data captured</h5>";
+    if ($result->num_rows > 0) {
+        $datatable = '<table class="summarydata">
+                        <tbody>
+                            <tr>
+                              <th>Year</th><th>Quarter</th><th>Province</th><th>Quantity</th><th>Percentage</th><th>Budget</th>
+                            </tr>';
+        while($row = $result->fetch_assoc()) {
+            $datatable .= "<tr>
+                              <td>".$row["YEAR"]."</td><td>".$row["QUARTER"]."</td><td>".$row["PROVINCE"]."</td><td>".$row["QTY"]."</td><td>".$row["QTY_PCT"]."</td><td>".$row["BUDGET"]."</td>
+                            </tr>";
+        }
+        $datatable .= " </tbody>
+                      </table>";
+    }
+    echo $datatable;    
+?>            
         </body>
 </html>

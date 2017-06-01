@@ -1,6 +1,6 @@
 <?php
 //require_once('/dbinitialisation.php');
-$servername = "gaea.sadomain.com";
+$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";

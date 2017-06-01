@@ -1,5 +1,5 @@
 <?php
-$servername = "gaea.sadomain.com";
+$servername = "localhost";
 $username = "gateway1_tasuser";
 $password = "tasuser123";
 $dbname = "gateway1_tas";
@@ -58,7 +58,7 @@ if (!$conn->query($sql)) {
         }
     }
     echo '</select>';
-    echo '<br><br>';
+    echo '&nbsp;';
 
 $sql = "SELECT STAT_TYPE, DESCRIPTION FROM STAT_TYPES";
 $result = $conn->query($sql);
@@ -88,11 +88,32 @@ if (!$conn->query($sql)) {
                     <option value="3">Quarter 3</option>
                     <option value="4">Quarter 4</option>
                 </select>
-                <br><br>
+                &nbsp;
                 <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
                 <input type="number" id="qty" name="qty" value="" placeholder="Quantity"><br><br>
-                <input type="reset" id="ResetBtn" name="" value="Reset"><br><br>
+                <input type="reset" id="ResetBtn" name="" value="Reset">&nbsp;
                 <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
             </form>
+<?php
+    $sql = "SELECT s.DESCRIPTION, YEAR, QUARTER, PROVINCE, QTY FROM OPERATIONS o JOIN STAT_TYPES s ON o.STAT_TYPE = s.STAT_TYPE";
+    $result = $conn->query($sql);
+    $datatable = "<h5>No project data captured</h5>";
+    if ($result->num_rows > 0) {
+        $datatable = '<table class="summarydata">
+                        <tbody>
+                            <tr>
+                              <th>Description</th><th>Province</th><th>Year</th><th>Quarter</th><th>Quantity</th>
+                            </tr>';
+        while($row = $result->fetch_assoc()) {
+            $datatable .= "<tr>
+                              <td>".$row["DESCRIPTION"]."</td><td>".$row["PROVINCE"]."</td><td>".$row["YEAR"]."</td><td>".$row["QUARTER"]."</td><td>".$row["QTY"]."</td>
+                            </tr>";
+        }
+        $datatable .= " </tbody>
+                      </table>";
+    }
+    echo $datatable;    
+?>            
+            
         </body>
 </html>
