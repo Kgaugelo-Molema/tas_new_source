@@ -29,10 +29,10 @@ if (!$conn->select_db($dbname)) {
         echo "<h3>Organisational Progress Report</h3>";
         echo "<br><br>";
 
-        $filtersql = "SELECT DISTINCT YEAR FROM ORGANISATIONALPROGRESS";
+        $filtersql = "SELECT DISTINCT YEAR FROM $mysql_table";
         $filterresult = $conn->query($filtersql);
         if (!$conn->query($filtersql)) {
-            die( "Error: Failed to return data from table ORGANISATIONALPROGRESS ".$conn->error."<br>");
+            die( "Error: Failed to return data from table $mysql_table ".$conn->error."<br>");
         }
             echo "FILTER : "; 
             echo '<select name="year">';
@@ -80,7 +80,8 @@ if (!$conn->select_db($dbname)) {
         </form>
         <br>    
 <?php            
-    $sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
+    $sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?`, STAT_TYPE FROM ".$mysql_table;
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $mysql_table = "ORGPROGRESSFILTERERD";
@@ -105,7 +106,7 @@ if (!$conn->select_db($dbname)) {
             }
         }
         if ($filtervalues != "") {
-            $sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
+            $sql = "SELECT `Programme/ Dept`, `YEAR`, `KPI`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?`, STAT_TYPE FROM ".$mysql_table;
             $sql .= " WHERE " . $filtervalues;
         }
     }
@@ -141,13 +142,16 @@ if (!$conn->select_db($dbname)) {
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $datatable .= "<tr>
-                              <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"]."</td><td>".$row["KPI"]."</td><td>".$row["OBJECTIVE MET?"]."</td><td>".$row["TARGET"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["VARIANCE (%)"]."</td>
+                              <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"].'</td><td><a href="./orgprogressdetailedreport.php?kpi='.$row["STAT_TYPE"].'" target="InlineFrame1">'.$row["KPI"].'</a></td><td>'.$row["OBJECTIVE MET?"]."</td><td>".$row["TARGET"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["VARIANCE (%)"]."</td>
                             </tr>";
         }
         $datatable .= " </tbody>
                       </table>";
         echo $datatable;
-}
+    }
+    else {
+        echo "<h5>No data returned for the applied filter</h5>";        
+    }
 ?>
             <br><br>
             <h5><a href="../pages/organisationalprogressreport.php" target="_blank" title="Open Report">Open report in new window</a></h5>
