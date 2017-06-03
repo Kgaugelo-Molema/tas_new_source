@@ -30,7 +30,7 @@ $sqltext = "INSERT INTO $mysql_table (".$dataCols.")
                    VALUES ('".date("Y-m-d")."',
                    '".date("G:i:s")."',
                    '".$_SERVER['REMOTE_ADDR']."',
-                   '".$_SERVER['HTTP_USER_AGENT']."','GP','GAUTENG')";
+                   '".$_SERVER['HTTP_USER_AGENT']."','GP','Gauteng')";
 				   
 echo "$sqltext<br>";
 				   
