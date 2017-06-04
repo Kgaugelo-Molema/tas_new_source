@@ -24,7 +24,7 @@ if (!$conn->select_db($dbname)) {
     </head>
     <body>
 <?php            
-    $sql = "SELECT `Programme/ Dept`, `YEAR`, QUARTER, PROVINCE, `DESCRIPTION`, `TARGET`, `ACTUAL`, `VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
+    $sql = "SELECT `Programme/ Dept`, `YEAR`, PROVINCE, `DESCRIPTION`, `Q1 TARGET`, `Q1 ACTUAL`, `Q1 VARIANCE (%)`, `Q2 TARGET`, `Q2 ACTUAL`, `Q2 VARIANCE (%)`, `Q3 TARGET`, `Q3 ACTUAL`, `Q3 VARIANCE (%)`, `Q4 TARGET`, `Q4 ACTUAL`, `Q4 VARIANCE (%)`, `OBJECTIVE MET?` FROM ".$mysql_table;
     $filtervalues = "(STAT_TYPE = '".$_GET["kpi"]."')";
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
@@ -64,17 +64,22 @@ if (!$conn->select_db($dbname)) {
         $captionsql = "SELECT DESCRIPTION FROM STAT_TYPES WHERE STAT_TYPE = '".$_GET["kpi"]."'";
         $result = $conn->query($captionsql);
         $captionrow = $result->fetch_assoc();
-        $filtercaption = "<h4>[".$captionrow["DESCRIPTION"]."]</h4>";
+        $filtercaption = "[".$captionrow["DESCRIPTION"]."]";
         $datatable = '<table>
                         <caption>'.$filtercaption.'</caption>
-                        <tbody>
+						<thead>
                             <tr>
-                              <th>Programme/ Dept</th><th>YEAR</th><th>Province</th><th>OBJECTIVE MET?</th><th>QUARTER</th><th>TARGET</th><th>ACTUAL</th><th>VARIANCE (%)</th>
+                              <th></th><th></th><th></th><th></th><th colspan="3">QUARTER 1</th><th colspan="3">QUARTER 2</th><th colspan="3">QUARTER 3</th><th colspan="3">QUARTER 4</th>
+							</tr>
+						</thead>
+                        <tbody>
+							<tr>
+                              <th>Programme/ Dept</th><th>Year</th><th>Province</th><th>Objective Met?</th><th>Target</th><th>Actual</th><th>Variance (%)</th><th>Target</th><th>Actual</th><th>Variance (%)</th><th>Target</th><th>Actual</th><th>Variance (%)</th><th>Target</th><th>Actual</th><th>Variance (%)</th>
                             </tr>';
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $datatable .= "<tr>
-                              <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"]."</td><td>".$row["PROVINCE"]."</td><td>".$row["OBJECTIVE MET?"]."</td><td>".$row["QUARTER"]."</td><td>".$row["TARGET"]."</td><td>".$row["ACTUAL"]."</td><td>".$row["VARIANCE (%)"]."</td>
+                              <td>".$row["Programme/ Dept"]."</td><td>".$row["YEAR"]."</td><td>".$row["PROVINCE"]."</td><td>".$row["OBJECTIVE MET?"]."</td><td>".$row["Q1 TARGET"]."</td><td>".$row["Q1 ACTUAL"]."</td><td>".$row["Q1 VARIANCE (%)"]."</td><td>".$row["Q2 TARGET"]."</td><td>".$row["Q2 ACTUAL"]."</td><td>".$row["Q2 VARIANCE (%)"]."</td><td>".$row["Q3 TARGET"]."</td><td>".$row["Q3 ACTUAL"]."</td><td>".$row["Q3 VARIANCE (%)"]."</td><td>".$row["Q4 TARGET"]."</td><td>".$row["Q4 ACTUAL"]."</td><td>".$row["Q4 VARIANCE (%)"]."</td>
                             </tr>";
         }
         $datatable .= " </tbody>

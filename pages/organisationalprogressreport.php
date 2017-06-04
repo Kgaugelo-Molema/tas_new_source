@@ -137,7 +137,7 @@ if (!$conn->select_db($dbname)) {
                         <caption>'.$filtercaption.'</caption>
                         <tbody>
                             <tr>
-                              <th>Programme/ Dept</th><th>YEAR</th><th>KPI</th><th>OBJECTIVE MET?</th><th>TARGET</th><th>ACTUAL</th><th>VARIANCE (%)</th>
+                              <th>Programme/ Dept</th><th>Year</th><th>KPI</th><th>Objective Met?</th><th>Target</th><th>Actual</th><th>Variance (%)</th>
                             </tr>';
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
