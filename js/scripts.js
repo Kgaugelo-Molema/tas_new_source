@@ -17,7 +17,7 @@ function validString(str)
         {return true}
 }
 
-function checktasform(form) 		
+function checkCommonValues(form)
 {
     if (validString(form.prov_cd.value) == false)
     {
@@ -37,10 +37,54 @@ function checktasform(form)
 	form.year.focus()
 	return false
     }
+    else if (validString(form.qty.value) == false)
+    {
+        alert("Please enter a valid quantity")
+        form.qty.focus()
+        return false
+    } 
     else if (validString(form.quater.value) == false)
     {
         alert("Please select a quater")
 	form.kpi_cd.focus()
 	return false
     }
+}
+
+function checkPrgDetailsForm(form){
+    if (!checkCommonValues(form))
+        result = false;
+    if (result) {
+        if (validString(form.qty.value) == false)
+        {
+            alert("Please enter a valid quantity")
+            form.qty.focus()
+            return false
+        } 
+    }
+}
+
+function checkBgtDetailsForm(form) {
+    return checkCommonValues(form)
+}
+
+function checktasform(form) 		
+{
+    if (form.name == "PrgDetailsForm") {
+        return checkPrgDetailsForm(form)
+    }
+    else if (form.name == "BgtDetailsForm") {
+        return checkBgtDetailsForm(form)
+    }
+    else {
+        alert("Form values not validated")
+        return false
+    }
+}
+
+function calcPct(form)
+{
+    if (form.name == "PrgDetailsForm") {
+        form.pct.value = form.budgetQty.value
+    }    
 }

@@ -16,7 +16,7 @@ if (!$conn->select_db($dbname)) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     //Get the captured province budget ID
-    $sqlBudgetId = "SELECT BUDGET_ID FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' AND 
+    $sqlBudgetId = "SELECT BUDGET_ID, QTY FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' AND 
             DATESTAMP = (SELECT MAX(DATESTAMP) FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' ) AND 
             TIME = (SELECT MAX(TIME) FROM BUDGETS WHERE PROVINCE = '".$_POST["prov_cd"]."' )";
     $result = $conn->query($sqlBudgetId);
@@ -25,17 +25,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 
     $budget_id = 0;
+    $budget_qty = 0;
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();        
-        $budget_id = $row["BUDGET_ID"];        
+        $budget_id = $row["BUDGET_ID"]; 
+        $budget_qty = $row["QTY"];
     }
+    
+    //$edit_qty
+    echo "Budget QTY: $budget_qty<br>";
+    $edit_pct = $_POST["pct"];
+    if (empty($edit_pct)) {
+        $edit_pct = $budget_qty;
+    }
+    echo "Edit QTY: $edit_pct<br>";
     
     $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STAT_TYPE`, `YEAR`, `QUARTER`, `PROVINCE`, `QTY`, `QTY_PCT`, `BUDGET_ID`)
                        VALUES ('".date("Y-m-d")."',
                        '".date("G:i:s")."',
                        '".$_SERVER['REMOTE_ADDR']."',
                        '".$_SERVER['HTTP_USER_AGENT']."'";
-    $inputvalues = "'".$_POST["kpi_cd"]."',".$_POST["year"].",'".$_POST["quater"]."','".$_POST["prov_cd"]."',".$_POST["qty"].",".$_POST["pct"].",".$budget_id;
+    $inputvalues = "'".$_POST["kpi_cd"]."',".$_POST["year"].",'".$_POST["quater"]."','".$_POST["prov_cd"]."',".$_POST["qty"].",".$edit_pct.",".$budget_id;
     $sqltext = $sqltext.",".$inputvalues.")";
 
     if (!$conn->query($sqltext)) {
@@ -104,7 +114,7 @@ if (!$conn->query($sql)) {
             </select>
             &nbsp;
             <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
-            <input type="number" id="qty" name="qty" value="" placeholder="Quantity">&nbsp;
+            <input type="number" id="qty" name="qty" value="" placeholder="Quantity" onchange="calcPct(this.form)">&nbsp;
             <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
             <input type="reset" id="ResetBtn" name="" value="Reset">&nbsp;
             <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
