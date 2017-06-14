@@ -118,6 +118,25 @@ if (!$conn->query($sql)) {
             <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage" onchange="calcPct(this.form)"><br><br>
             <input type="reset" id="ResetBtn" name="" value="Reset">&nbsp;
             <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
+<?php
+    $sqlBudgetList = "SELECT BUDGET_ID, QTY, PROVINCE, BUDGET, QUARTER, YEAR FROM BUDGETS 
+                        WHERE DATESTAMP IN (SELECT MAX(DATESTAMP) 
+                                           FROM BUDGETS WHERE  
+                                           TIME IN (SELECT MAX(TIME) 
+                                                   FROM BUDGETS
+                                                  GROUP BY PROVINCE)
+                                            GROUP BY PROVINCE)";
+    $result = $conn->query($sqlBudgetList);
+    if (!$conn->query($sqlBudgetList)) {
+        die( "Error: Failed to return budget data ".$conn->error."<br>");
+    }
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo '<input type="hidden" name="budget'.$row["PROVINCE"].'Qty" value="'.$row["QTY"].'">';
+        }
+    }
+?>
         </form>
 <?php
     $sql = "SELECT s.DESCRIPTION, b.YEAR, b.QUARTER, b.PROVINCE, p.QTY, p.QTY_PCT, FORMAT(b.BUDGET,2) 'BUDGET' 

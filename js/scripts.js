@@ -85,7 +85,15 @@ function checktasform(form)
 function calcPct(form)
 {
     if (form.name == "PrgDetailsForm") {
-        //form.pct.value = form.budgetQty.value
-        form.pct.value = 9
+        var bgtEltName = ""
+        if (form.prov_cd.value != "none") {
+            bgtEltName = "budget"+form.prov_cd.value+"Qty"
+        }
+        var bgtElement = document.getElementsByName(bgtEltName)
+        var budgetPct = 0
+        if (bgtElement.length > 0) {
+            budgetPct = form.qty.value/bgtElement[0].value*100
+        }
+        form.pct.value = budgetPct
     }    
 }
