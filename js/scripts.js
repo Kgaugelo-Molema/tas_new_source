@@ -85,6 +85,7 @@ function checktasform(form)
 function calcPct(form)
 {
     if (form.name == "PrgDetailsForm") {
-        form.pct.value = form.budgetQty.value
+        //form.pct.value = form.budgetQty.value
+        form.pct.value = 9
     }    
 }

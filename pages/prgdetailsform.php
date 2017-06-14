@@ -115,7 +115,7 @@ if (!$conn->query($sql)) {
             &nbsp;
             <input type="number" id="year" name="year" value="" placeholder="Year"><br><br>
             <input type="number" id="qty" name="qty" value="" placeholder="Quantity" onchange="calcPct(this.form)">&nbsp;
-            <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage"><br><br>
+            <input type="number" id="pct" name="pct" value="" placeholder="Qty Percentage" onchange="calcPct(this.form)"><br><br>
             <input type="reset" id="ResetBtn" name="" value="Reset">&nbsp;
             <input type="submit" id="SubmitBtn" name="" value="Submit" onclick="return checktasform(this.form)">
         </form>
