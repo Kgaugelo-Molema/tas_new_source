@@ -20,6 +20,7 @@ if (!$conn->select_db($dbname)) {
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/png" href="../images/prodsaemblemicon.png">
         <link rel="stylesheet" href="../styles/reportstyle.css">
     </head>
     <body>

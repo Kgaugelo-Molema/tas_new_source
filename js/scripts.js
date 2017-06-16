@@ -68,6 +68,20 @@ function checkBgtDetailsForm(form) {
     return checkCommonValues(form)
 }
 
+function checkPrjDetailsForm(form){
+	var result = true
+    if (!checkCommonValues(form))
+        result = false
+    if (result) {
+        if (validString(form.qty.value) == false)
+        {
+            alert("Please enter a valid quantity")
+            form.qty.focus()
+            return false
+        } 
+    }
+}
+
 function checktasform(form) 		
 {
     if (form.name == "PrgDetailsForm") {
@@ -75,6 +89,9 @@ function checktasform(form)
     }
     else if (form.name == "BgtDetailsForm") {
         return checkBgtDetailsForm(form)
+    }
+    else if (form.name == "PrjDetailsForm") {
+        return checkPrjDetailsForm(form)
     }
     else {
         alert("Form values not validated")

@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <html>
 	<head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="icon" type="image/png" href="../images/prodsaemblemicon.png">
             <link rel="stylesheet" href="../styles/style.css">
             <script src="../js/scripts.js"></script>
 	</head>

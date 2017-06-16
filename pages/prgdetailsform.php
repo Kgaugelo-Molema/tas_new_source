@@ -32,13 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $budget_qty = $row["QTY"];
     }
     
-    //$edit_qty
-    echo "Budget QTY: $budget_qty<br>";
     $edit_pct = $_POST["pct"];
     if (empty($edit_pct)) {
         $edit_pct = $budget_qty;
     }
-    echo "Edit QTY: $edit_pct<br>";
     
     $sqltext = "INSERT INTO $mysql_table (`DATESTAMP`, `TIME`, `IP`, `BROWSER`, `STAT_TYPE`, `YEAR`, `QUARTER`, `PROVINCE`, `QTY`, `QTY_PCT`, `BUDGET_ID`)
                        VALUES ('".date("Y-m-d")."',
@@ -58,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <html>
 	<head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="icon" type="image/png" href="../images/prodsaemblemicon.png">
             <link rel="stylesheet" href="../styles/style.css">
             <script src="../js/scripts.js"></script>
 	</head>
@@ -141,7 +139,7 @@ if (!$conn->query($sql)) {
 <?php
     $sql = "SELECT s.DESCRIPTION, b.YEAR, b.QUARTER, b.PROVINCE, p.QTY, p.QTY_PCT, FORMAT(b.BUDGET,2) 'BUDGET' 
             FROM PROGRAMS p JOIN BUDGETS b ON b.BUDGET_ID = p.BUDGET_ID
-            JOIN STATS s ON s.STAT_TYPE = p.STAT_TYPE";
+            JOIN STAT_TYPES s ON s.STAT_TYPE = p.STAT_TYPE";
     
     $result = $conn->query($sql);
     $datatable = "<h5>No program data captured</h5>";
